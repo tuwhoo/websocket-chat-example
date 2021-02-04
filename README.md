@@ -1,8 +1,10 @@
-###### Websocket Chat Example
+##### Websocket Chat Example
 
 Quick example of websocket chat.
 
 ###### Run:
 
-> npm i
-> npm run start
+```
+npm i
+npm run start
+```
