@@ -1,0 +1,82 @@
+.app {
+    display: inline-block;
+    font-family: 'Courier New', Courier, monospace;
+}
+
+.input-name {
+    width: 120px;
+    margin-bottom: 24px;
+    height: 20px;
+}
+
+.messages {
+    width: 420px;
+    height: 250px;
+    overflow-y: auto;
+}
+
+.bold { font-weight: bold; }
+
+.message {
+    position: relative;
+    display: block;
+    width: 300px;
+    max-width: max-content;
+    margin-bottom: 20px;
+}
+
+.message.my {
+    margin-left: auto;
+    margin-right: 7px;
+    padding: 8px;
+    background-color: #eeeeee;
+}
+
+.message.my::after {
+    content: " ";
+    position: absolute;
+    bottom: 9px;
+    right: -7px;
+    border-top: 7px solid transparent;
+    border-right: none;
+    border-left: 7px solid #eeeeee;
+    border-bottom: 7px solid transparent;
+}
+
+.message.income {
+    margin-left: 7px;
+    padding: 8px;
+    background-color: #efefef;
+}
+
+.message.income::after {
+    content: " ";
+    position: absolute;
+    bottom: 9px;
+    left: -7px;
+    border-top: 7px solid transparent;
+    border-left: none;
+    border-right: 7px solid #efefef;
+    border-bottom: 7px solid transparent;
+}
+
+.message.system {
+    margin: auto;
+    margin-bottom: 20px;
+    text-align: center;
+    color: green;
+}
+
+.message:nth-last-child() {
+    margin-bottom: none;
+}
+
+.input-message {
+    width: 300px;
+    height: 20px;
+    margin-right: 5px;
+}
+
+.send-message {
+    height: 26px;
+}
