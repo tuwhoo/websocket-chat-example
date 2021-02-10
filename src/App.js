@@ -16,9 +16,22 @@ const App = () => {
 
     const newWs = new WebSocket('ws://localhost:6969');
     newWs.onopen = () => {
-      console.log('Connection to WebSocket opened!');
+      newWs.send(JSON.stringify({ auth: '228' }));
     }
-    newWs.onmessage = ({ data }) => setMessages(prevMessages => [...prevMessages, JSON.parse(data)]);
+
+    newWs.onmessage = ({ data }) => {
+      const parsedMessage = JSON.parse(data);
+      let message = parsedMessage;
+      if (parsedMessage.status === 'ok') {
+        console.log('Connection to WebSocket opened!');
+        message = {
+          system: true,
+          message: 'You are online!',
+        };
+      }
+      setMessages(prevMessages => [...prevMessages, message]);
+    }
+
     newWs.onclose = function() {
       setWs(null);
     }
@@ -67,15 +80,19 @@ const App = () => {
       <input className='input-name' type="text" placeholder="Input your name" ref={nameRef} />
       <div ref={messagesRef} className='messages'>
         {
-          messages.length === 0 && <span className='message system'>You are online!</span>
-        }
-        {
-          messages.map((message, i) => (
-            <span key={i} className={`message ${!message.user ? 'my' : 'income'}`}>
-              {message.user && <span className='bold'>{`${message.user}:`}</span>}
-              {message.message}
-            </span>
-          ))
+          messages.map((message, i) => {
+
+            if (message.system) return (
+              <span key={i} className='message system'>{message.message}</span>
+            );
+      
+            return (
+              <span key={i} className={`message ${!message.user ? 'my' : 'income'}`}>
+                {message.user && <span className='bold'>{`${message.user}:`}</span>}
+                {message.message}
+              </span>
+            );
+          })
         }
       </div>
       <input className='input-message' type="text" placeholder="Type your message here" ref={messageBoxRef} onKeyPress={onMessageBoxPress}/>

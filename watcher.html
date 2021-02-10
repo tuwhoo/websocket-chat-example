@@ -1,0 +1,35 @@
+<h1>Websocket watcher:</h1>
+<pre id="messages" style="height: 400px; overflow: scroll"></pre>
+
+<script>
+  (function() {
+    const messages = document.querySelector('#messages');
+
+    const WS_URL = 'ws://localhost:6969';
+    let ws;
+
+    function showMessage(message) {
+      messages.textContent += `\n\n${message}`;
+      messages.scrollTop = messages.scrollHeight;
+      messageBox.value = '';
+    }
+
+    function init() {
+      if (ws) {
+        ws.onerror = ws.onopen = ws.onclose = null;
+        ws.close();
+      }
+
+      ws = new WebSocket(WS_URL);
+      ws.onopen = () => {
+        ws.send(JSON.stringify({ auth: '228' }));
+      }
+      ws.onmessage = ({ data }) => showMessage(data);
+      ws.onclose = function() {
+        ws = null;
+      }
+    }
+
+    init();
+  })();
+</script>
